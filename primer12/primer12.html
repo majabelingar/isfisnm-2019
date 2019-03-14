@@ -6,7 +6,7 @@
     <title>Primer s tipko</title>
 </head>
 
-<body onload="load();">
+<body onload="load()";>
 
 <div id="divZaIzpis"></div>
 
@@ -37,54 +37,55 @@ var socket = io.connect("192.168.1.206:8080"); // povezava preko vtičnika
 socket.on("sporočiloKlientu", function (sporočilo){
     divZaIzpis.innerHTML += log(sporočilo); // dodamo sporočilo
     
-    if (sporočilo == 1) {
-        ctx.strokeStyle = "#FF0000"; //set color to line
-        
-        var x = new Array(); //new field for x values
-		var y = new Array(); // new field for y values
-		
-		var maxGrafX = canvas.width;
-		var maxGrafY = canvas.height;
-		var timer; // timer variable
-
-
-		for (var i=0; i < canvas.width; i++) {
-			x[i] = i; // values for x coordinate
-			y[i] = Math.random();  // random value between 0 and 1
-	
-		
-		
-		function editGraf() {
-
-			y.splice(0, 1); //delete one value on x
-			y[maxGrafX] = Math.random(); // add new value at the end of the field
-
-			ctx.clearRect(0, 0, maxGrafX, maxGrafY); //clear canvas
-			ctx.beginPath();
-
-			for (var i=0; i < y.length; i++) {
-			ctx.lineTo(x[i], y[i]*maxGrafY);
-
-			ctx.stroke(); // to show the line
-
-			timer = setTimeout(editGraf(), 10); //over 10ms edit loop 
-		}
+        if (sporočilo == 1) {
+            ctx.strokeStyle = "#FF0000"; //set color to line
+            
+            var x = new Array(); //new field for x values
+    		var y = new Array(); // new field for y values
+    		
+    		var maxGrafX = canvas.width;
+    		var maxGrafY = canvas.height;
+    		var timer; // timer variable
+    
+    
+    		for (var i=0; i < canvas.width; i++) {
+    			x[i] = i; // values for x coordinate
+    			y[i] = Math.random();  // random value between 0 and 1
+    		}
+    	
 		
 		
-		function load() {
-
-			ctx.beginPath(); //start to draw
-
-			for (var i=0; i < y.length; i++) {
-				ctx.lineTo(x[i], y[i]*maxGrafY);
-			}
-
-			ctx.stroke(); // to show the line
-
-			editGraf();
-		}
-	
-	}
+    		function editGraf() {
+    
+    			y.splice(0, 1); //delete one value on x
+    			y[maxGrafX] = Math.random(); // add new value at the end of the field
+    
+    			ctx.clearRect(0, 0, maxGrafX, maxGrafY); //clear canvas
+    			ctx.beginPath();
+    
+    			for (var i=0; i < y.length; i++) {
+    			ctx.lineTo(x[i], y[i]*maxGrafY);
+    
+    			ctx.stroke(); // to show the line
+    
+    			timer = setTimeout(editGraf, 10); //over 10ms edit loop 
+    			}
+    		}
+    		
+		
+    		function load() {
+    
+    			ctx.beginPath(); //start to draw
+    
+    			for (var i=0; i < y.length; i++) {
+    				ctx.lineTo(x[i], y[i]*maxGrafY);
+    			}
+    
+    			ctx.stroke(); // to show the line
+    
+    			editGraf();
+    		}
+        }
 });
 
 </script>
