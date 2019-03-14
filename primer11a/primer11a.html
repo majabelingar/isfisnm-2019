@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<meta charset = utf8>
+<html>
+
+<head>
+    <title>Primer s tipko</title>
+</head>
+
+<body>
+
+<div id="divZaIzpis"></div>
+
+<canvas id="myCanvas" width="800" height="100" style="border: 1px solid #d3d3d3;"></canvas>
+
+
+<br>
+
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+<script type="text/javascript">
+"use strict"; // za uporabo razredov ("class")
+
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+
+var divZaIzpis = document.getElementById("divZaIzpis");
+// spremenljivka za izpis sporočil
+
+function log(sporočilo) {
+    return "<div>" + sporočilo + "</div>";
+}
+
+divZaIzpis.innerHTML += log("Pritisnite tipko na vezju");
+
+var socket = io.connect("192.168.1.206:8080"); // povezava preko vtičnika
+
+socket.on("sporočiloKlientu", function (sporočilo){
+    divZaIzpis.innerHTML += log(sporočilo); // dodamo sporočilo
+    
+    if (sporočilo == 1) {
+        ctx.strokeStyle = "#FF0000"; //set color to line
+        
+        var x = new Array(); //new field for x values
+		var y = new Array(); // new field for y values
+
+		x[0] = 10;
+		y[0] = 70;
+		x[1] = 110;
+		y[1] = 20;
+		x[2] = 210;
+		y[2] = 40;
+		x[3] = 310; 
+		y[3] = 60;
+		x[4] = 410;
+		y[4] = 10;
+
+		ctx.beginPath(); //start to draw
+
+		for (var i=0; i < y.length; i++) {
+			ctx.lineTo(x[i], y[i]);
+		}
+
+		ctx.stroke(); // to show the line
+    }
+    
+});
+
+</script>
+    
+</body>
+
+</html>
